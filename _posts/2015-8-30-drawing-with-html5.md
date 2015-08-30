@@ -10,11 +10,12 @@ Recently after graduating from The Flatiron School, I created a simple drawing a
 Step One: Setting Up 
 ----
 a) __Include the canvas element in your HTML:__
-the canvas element is simply a container
+{% highlight html %}
+<!--the canvas element is simply a container
 for rendering graphics
 Note: it has a transparent border, so giving it
 a colored border may be a good idea for this 
-exercise.
+exercise. -->
 
 <style>
   canvas {
@@ -22,22 +23,27 @@ exercise.
   }
 </style>
 
-it's important to give it an id since it is what
-we will be using later on an an identifier.
 <canvas id="drawing-canvas"></canvas>
+=======
+<!-- it's important to give it an id since it is what
+we will be using later on an an identifier.<br>
+<canvas id="drawing-canvas"></canvas> -->
+{% endhighlight %}
 
 Don't worry about changing the dimensions yet.  That's actually one of the things I will touch upon soon.  For now, let's make sure it works. 
 
 b) __Set the Context:__
 Before we start to draw, we have to let the canvas know the type of graphics it will be rendering.  In this case, we will be working with 2-dimensional graphics.  This is defined in your javascript file:
 
-```javascript
+{% highlight javascript }
+>>>>>>> Drawing with HTML5 canvas blog
 function(){
 // We will soon need the context variable to enable drawing.
   var canvas = document.getElementById("drawing-canvas");
   drawingContext = canvas.getContext("2d"); 
 }();
-```
+{% endhighlight}
+
 
 Step Two: Drawing
 ----
