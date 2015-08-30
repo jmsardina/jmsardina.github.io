@@ -10,11 +10,12 @@ Recently after graduating from The Flatiron School, I created a simple drawing a
 Step One: Setting Up 
 ----
 a) __Include the canvas element in your HTML:__
-the canvas element is simply a container
+{% highlight html %}
+<!--the canvas element is simply a container
 for rendering graphics
 Note: it has a transparent border, so giving it
 a colored border may be a good idea for this 
-exercise.
+exercise. -->
 
 <style>
   canvas {
@@ -22,22 +23,26 @@ exercise.
   }
 </style>
 
-it's important to give it an id since it is what
-we will be using later on an an identifier.
 <canvas id="drawing-canvas"></canvas>
+=======
+<!-- it's important to give it an id since it is what
+we will be using later on an an identifier.<br>
+<canvas id="drawing-canvas"></canvas> -->
+{% endhighlight %}
 
 Don't worry about changing the dimensions yet.  That's actually one of the things I will touch upon soon.  For now, let's make sure it works. 
 
 b) __Set the Context:__
 Before we start to draw, we have to let the canvas know the type of graphics it will be rendering.  In this case, we will be working with 2-dimensional graphics.  This is defined in your javascript file:
 
-```javascript
+{% highlight javascript %}
 function(){
 // We will soon need the context variable to enable drawing.
   var canvas = document.getElementById("drawing-canvas");
   drawingContext = canvas.getContext("2d"); 
 }();
-```
+{% endhighlight %}
+
 
 Step Two: Drawing
 ----
@@ -57,7 +62,7 @@ I created a [simple app](https://github.com/jmsardina/html5-canvas-demo) to show
 
 If we want cross-browser compatiblity, we can create a custom function that will return the mouse coordinates in relation to the target html element.  Something that worked for me was to identify the position of the target element (the canvas) and use that along with (pageX, pageY) function, which IS cross-browser compatible, to calculate the current position of the mouse. 
 
-```javascript
+{% highlight javascript %}
 function positionX(e){
   e.pageX - $(e.target).offset().length 
 }
@@ -65,10 +70,10 @@ function positionX(e){
 function positionY(e){
   e.pageY - $(e.target).offset().top
 }
-```
+{% endhighlight %}
 
 Now that we have that taken care of, we can get to business!
-```javascript
+{% highlight javascript %}
 function startDrawing(e){
   paint = true;
   var offsetX = positionX(e);
@@ -77,28 +82,28 @@ function startDrawing(e){
   e.beginPath(); // begins a new path detached from the last one.
   e.moveTo(offsetX, offsetY); // Identifies the starting point.
 }
-```
+{% endhighlight %}
 
 What's up with that ```paint``` variable? Let's take a minute to think about the expected behavior:
 * When mouse is over the canvas, render a stroke when mouse moves and is held down.
 * When mouse is over the canvas, do not render a stroke if mouse moves, but is not down.
 We're using the ```paint``` variable as a flag to let us know when the mouse is down.  On ```mousedown```, paint becomes true.  On ```mousemove```, we'll see the stroke only if ```paint === true``` (mousedown):
 
-```javascript
+{% highlight javascript %}
 function keepDrawing(e){
   if( paint === true ){
     e.lineTo(positionX(e), positionY(e)); // Identifies the end point.
     e.stroke();
 }
-```
+{% endhighlight %}
 
 As you can imagine, ```paint``` becomes false on 'mouseup'. That's how it will stop drawing!
 
-```javascript
+{% highlight javascript %}
 function stopDrawing(){
   paint = false;
 }
-```
+{% endhightlight %}
 
 Step Three: Enhancing
 ----
@@ -108,24 +113,24 @@ The next thing I wanted to do after making it bigger was making it responsive.  
 
 One way of getting around this may be a little expensive, but assuming the user won't be resizing the canvas like a mad person, it's actually not that bad. Since we can use Javascript to set attributes, we can try setting the attributes dynamically as a the user resizes the window.  This is how it looks:
 
-```html
+{% highlight html %}
 <div class="canvas-container">
   <canvas id="drawing-canvas"></canvas>
 </div>
-```
+{% endhighlight %}
 
-```css
+{% highlight css %}
 .canvas-container {
   height: 80%;
   width:  80%;
 } 
-```
+{% endhighlight %}
 
-```javascript
+{% highlight javascript %}
 $(window).on('resize', resizeCanvas);
 
 function resizeCanvas(){
   $('#drawing-canvas').attr('height', $('.canvas-container').height());
   $('#drawing-canvas').attr('width', $('.canvas-container').width());
 }
-```
+{% endhighlight %}
